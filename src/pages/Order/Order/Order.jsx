@@ -6,6 +6,7 @@ import { useState } from "react";
 import useMenu from "../../../hooks/useMenu";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import FoodCard from "../../../Components/FoodCard/FoodCard";
 
 const Order = () => {
     const categories = ['salad','pizza','soup','dessert','drinks'];
@@ -34,11 +35,23 @@ const Order = () => {
           <Tab>Dessert</Tab>
           <Tab>Drinks</Tab>
         </TabList>
-        <TabPanel></TabPanel>
-        <TabPanel></TabPanel>
-        <TabPanel></TabPanel>
-        <TabPanel></TabPanel>
-        <TabPanel></TabPanel>
+        <TabPanel>
+        {salad.map((item, index) => (
+                        <FoodCard key={index} item={item} />
+                    ))}
+        </TabPanel>
+        <TabPanel>
+        <FoodCard item={pizza}></FoodCard>
+        </TabPanel>
+        <TabPanel>
+        <FoodCard item={soup}></FoodCard>
+        </TabPanel>
+        <TabPanel>
+        <FoodCard item={desert}></FoodCard>
+        </TabPanel>
+        <TabPanel>
+        {/* <FoodCard item={drinks}></FoodCard> */}
+        </TabPanel>
       </Tabs>
     </div>
   );
