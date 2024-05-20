@@ -9,6 +9,7 @@ const Login = () => {
    const navigate = useNavigate();
    const location   = useLocation();
    const from = location.state?.from?.pathname || "/";
+   console.log("state in the location login page",location.state)
     const [disabled,setDisabled] = useState(true);
     const {signIn} = useContext(AuthContext);
     useEffect(()=>{
