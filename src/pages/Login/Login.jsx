@@ -1,11 +1,14 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../Provider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import Swal from 'sweetalert2';
 
 const Login = () => {
-    const captchaRef = useRef(null);
+   const navigate = useNavigate();
+   const location   = useLocation();
+   const from = location.state?.from?.pathname || "/";
     const [disabled,setDisabled] = useState(true);
     const {signIn} = useContext(AuthContext);
     useEffect(()=>{
@@ -21,11 +24,29 @@ const Login = () => {
         .then(result=>{
           const user = result.user;
           console.log(user);
+          Swal.fire({
+            title: "User  Login Successful.",
+            showClass: {
+              popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+              `
+            },
+            hideClass: {
+              popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+              `
+            }
+          });
+          navigate(from , {replace:true});
         })
 
     }
-    const handleValidateCaptcha=()=>{
-         const user_captcha_value =  captchaRef.current.value;
+    const handleValidateCaptcha=(e)=>{
+         const user_captcha_value =  e.target.value;
          if (validateCaptcha(user_captcha_value)) {
               setDisabled(false);
         }
@@ -71,11 +92,11 @@ const Login = () => {
           
           </label>
           <input 
-          ref={ captchaRef }
+         onBlur={handleValidateCaptcha}
            type="text" 
           name="captcha"
            placeholder="type the above captcha" className="input input-bordered"  />
-        <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs mt-2">Validate</button>
+        
         </div>
         <div className="form-control mt-6">
           <input disabled={disabled} className="btn bg-yellow-400" type="submit" value="Login" />

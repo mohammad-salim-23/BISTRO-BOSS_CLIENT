@@ -2,12 +2,14 @@ import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../Provider/AuthProvider";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 const SignUp = () => {
-  const {createUser} = useContext(AuthContext);
+  const {createUser,updateUserProfile} = useContext(AuthContext);
   const {
     register,
     handleSubmit,
-
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -15,7 +17,28 @@ const SignUp = () => {
     createUser(data.email,data.password)
     .then(result=>{
       const loggedUser = result.user;
+      if(loggedUser){
       console.log(loggedUser);
+      const profile =   {
+        displayName:data?.name,
+        photoURL:data?.photoURL
+      }
+      updateUserProfile(profile)
+      .then(()=>{
+          console.log('user profile info updated');
+          reset();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+          });
+      })
+      .catch(error=>{
+        console.log(error);
+      })
+    }
     })
   };
 
@@ -49,6 +72,21 @@ const SignUp = () => {
                 />
                 {errors.name && (
                   <span className="text-red-600 ">Name is required</span>
+                )}
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">PhotoURL</span>
+                </label>
+                <input
+                  type="text"
+                  {...register("photoURL", { required: true })}
+                 
+                  placeholder="PhotoURL"
+                  className="input input-bordered"
+                />
+                {errors.photoURL && (
+                  <span className="text-red-600 ">Photo URL is required</span>
                 )}
               </div>
               <div className="form-control">
@@ -108,6 +146,7 @@ const SignUp = () => {
                 />
               </div>
             </form>
+            <p className="text-center mb-2">Alreade have an account go <Link className="font-bold" to="/login">Login Page</Link> </p>
           </div>
         </div>
       </div>
