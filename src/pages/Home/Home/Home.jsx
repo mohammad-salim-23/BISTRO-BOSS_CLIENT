@@ -14,7 +14,7 @@ const Home = () => {
           <Banner></Banner> 
           <Category></Category>
           <PopularMenu></PopularMenu>
-          <FeaturedItem></FeaturedItem>
+          <FeaturedItem></FeaturedItem> 
           <Testimonial></Testimonial>
         </div>
     );
