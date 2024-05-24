@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../Provider/AuthProvider";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 const SignUp = () => {
+  const axiosPublic = useAxiosPublic();
   const {createUser,updateUserProfile} = useContext(AuthContext);
   const {
     register,
@@ -25,7 +27,15 @@ const SignUp = () => {
       }
       updateUserProfile(profile)
       .then(()=>{
-          console.log('user profile info updated');
+      //  create user entry in the database
+     const userInfo = {
+        name: data.name,
+        email:data.email
+     }
+      axiosPublic.post('/users',userInfo)
+      .then(res=>{
+        if(res.data.insertedId){
+          console.log("user added to the databsase")
           reset();
           Swal.fire({
             position: "top-end",
@@ -34,6 +44,9 @@ const SignUp = () => {
             showConfirmButton: false,
             timer: 1500
           });
+        }
+      })
+          
       })
       .catch(error=>{
         console.log(error);
