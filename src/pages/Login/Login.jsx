@@ -4,6 +4,7 @@ import { AuthContext } from '../../Provider/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Swal from 'sweetalert2';
+import SocialComponent from '../../Components/SocialComponent/SocialComponent';
 
 const Login = () => {
    const navigate = useNavigate();
@@ -102,8 +103,13 @@ const Login = () => {
         <div className="form-control mt-6">
           <input disabled={disabled} className="btn bg-yellow-400" type="submit" value="Login" />
         </div>
+
       </form>
+
+      
       <p className='flex items-center justify-center mb-2'><small>New here? </small> <Link  to="/signup">Create a new account</Link></p>
+    
+      <SocialComponent></SocialComponent>
     </div>
   </div>
 </div>
