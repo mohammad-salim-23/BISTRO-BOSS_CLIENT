@@ -2,11 +2,12 @@ import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../Provider/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import SocialComponent from "../Components/SocialComponent/SocialComponent";
 const SignUp = () => {
+  const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const {createUser,updateUserProfile} = useContext(AuthContext);
   const {
@@ -47,7 +48,7 @@ const SignUp = () => {
           });
         }
       })
-          
+          navigate('/'); 
       })
       .catch(error=>{
         console.log(error);
