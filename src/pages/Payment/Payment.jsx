@@ -1,12 +1,18 @@
+import { loadStripe } from "@stripe/stripe-js";
 import SectionTitle from "../../Components/SectionTitle/SectionTitle";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckOutForm from "./CheckOutForm";
 
 
 const Payment = () => {
+    const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
     return (
         <div>
             <SectionTitle heading="payment" subHeading="Please pay to eat"></SectionTitle>
             <div>
-                <h2 className="text-3xl">teka o pakhi tumi uira uira aso....</h2>
+               <Elements stripe ={stripePromise}>
+              <CheckOutForm></CheckOutForm>
+               </Elements>
             </div>
         </div>
     );
