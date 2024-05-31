@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useCart from "../../hooks/useCart"
 import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 const CheckOutForm = () => {
    const [error,setError] = useState('');
    const[transictionId,setTransictionId] = useState('');
@@ -11,7 +13,8 @@ const CheckOutForm = () => {
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
     const {user} = useAuth();
-    const [cart] = useCart();
+    const [cart,refetch] = useCart();
+    const navigate = useNavigate();
     const totalPrice = cart.reduce((total, item) => total + item.price, 0)
     useEffect(() => {
        
@@ -79,7 +82,19 @@ const CheckOutForm = () => {
           }
 
           const res = await axiosSecure.post('/payments',payment);
-          console.log(res);
+          if(res?.data?.paymentResult?.insertedId){
+            refetch();
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "THank you for the taka poysa",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            navigate(`/dashboard/paymentHistory`)
+          }
+         
+          
         }
        }
 
