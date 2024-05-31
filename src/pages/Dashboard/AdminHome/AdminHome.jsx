@@ -27,13 +27,13 @@ const AdminHome = () => {
   
   <div className="stat place-items-center">
     <div className="stat-title">Revenue</div>
-    <div className="stat-value">{stats.revenue}</div>
+    <div className="stat-value">{stats?.revenue}</div>
     <div className="stat-desc">From January 1st to February 1st</div>
   </div>
   
   <div className="stat place-items-center">
     <div className="stat-title">Users</div>
-    <div className="stat-value text-secondary flex gap-3">{stats.users}
+    <div className="stat-value text-secondary flex gap-3">{stats?.users}
     <FaUser className="text-3xl"></FaUser>
     </div>
   
@@ -42,14 +42,14 @@ const AdminHome = () => {
     <div className="stat-title">Orders</div>
     <div className="stat-value text-secondary flex gap-3">
       
-        {stats.orders}   <FaJediOrder className="text-3xl"></FaJediOrder>
+        {stats?.orders}   <FaJediOrder className="text-3xl"></FaJediOrder>
         </div>
   
   </div>
   
   <div className="stat place-items-center">
     <div className="stat-title">Menu Items</div>
-    <div className="stat-value">{stats.menuItems}</div>
+    <div className="stat-value">{stats?.menuItems}</div>
     <div className="stat-desc">↘︎ 90 (14%)</div>
   </div>
   
